@@ -1,0 +1,31 @@
+!1 Website testing using ''table template'' and !-BrowserTest-!
+
+
+On this page we test whether we check the prices of a couple of houses for sale in Utrecht, The Netherlands. 
+This test continues where StoryboardTest left off and combines it with TableTemplateTest.
+
+The configuration of Selenium (i.e. which browser to use) and starting the browser session is done in the SuiteSetup. Which allows this configuration to be shared between tests. Closing the browser is done in SuiteTearDown, which happens after all tests are completed.
+
+|table template|check original price                                        |
+|open          |http://www.funda.nl                                         |
+|select        |€ 900.000          |for            |van                     |
+|select        |€ 1.500.000        |for            |tot                     |
+|enter         |@{address}, @{city}|as             |Plaats, buurt, adres etc|
+|note          |select option from autocomplete                             |
+|press         |down                                                        |
+|press         |enter                                                       |
+|click         |Zoek                                                        |
+|click         |@{address}                                                  |
+|$price=       |value of           |Vraagprijs                              |
+|$volume=      |value of           |Inhoud                                  |
+|check         |value of           |Woonoppervlakte|@{squareMeters} m²      |
+|$yearBuilt=   |value of           |Bouwjaar                                |
+
+
+|storyboard|browser test|
+
+|check original price                                                         |
+|address          |city   |price?          |square meters|year built?|volume? |
+|Gageldijk 104    |Utrecht|€ 900.000 k.k.  |270          |1906       |1.270 m³|
+|Wilhelminapark 46|Utrecht|€ 1.295.000 k.k.|312          |Voor 1906  |1.370 m³|
+
